@@ -1,4 +1,4 @@
-import { Stack, TextField } from '@mui/material';
+import { Box, Stack, TextField } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -21,6 +21,7 @@ const defaultPaperStyle = {
 };
 
 const CategoryCard = (props) => {
+    // console.log(props.data);
     return (
         <Paper
             sx={{
@@ -31,7 +32,26 @@ const CategoryCard = (props) => {
                 // Handle click, maybe navigate to another page or open modal
             }}
         >
-            <Typography sx={{ color: '#000000D8' }} variant="h5">{props.title}</Typography>
+            {!props.data && <Typography sx={{ color: '#000000D8' }} variant="h5">{props.title}</Typography>}
+            {
+                props.data &&
+                (
+                    <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+                        {
+                            Object.keys(props.data['Dept Desc']).map((key, idx) => {
+                                const category = key;
+                                const sales = props.data['Dept Desc'][key]['SALES'].toFixed(2);
+                                return <Box key={idx} sx={{ padding: 0.5 }}>
+                                    <Stack direction={'column'} alignItems={'center'}>
+                                        <Typography sx={{ fontSize: '11px' }}>{`Category: ${category}`}</Typography>
+                                        <Typography sx={{ fontSize: '11px' }}>{`Sales: ${sales}`}</Typography>
+                                    </Stack>
+                                </Box>
+                            })
+                        }
+                    </Stack>
+                )
+            }
         </Paper>
     );
 }
@@ -58,6 +78,29 @@ const legendData = [
 export const Sections = () => {
 
     const [selectedDate, setSelectedDate] = React.useState(null);
+    const [predictData, setPredictData] = React.useState(null);
+
+    const sendAPI = (year, week) => {
+
+        const URL = `${process.env.REACT_APP_API_URL}/api/callmodel`;
+
+        fetch(URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                year, week
+            })
+        }).then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setPredictData(data);
+            })
+            .catch((err) => {
+                console.error(err)
+            })
+    }
 
     const getWeekNumber = (date) => {
         const target = dayjs(date); // Convert the input to a Day.js object
@@ -71,9 +114,14 @@ export const Sections = () => {
     }
 
     const handleDateChange = (date) => {
+        console.log('On Date Change');
+
         setSelectedDate(date);
         // send post req
-        console.log(getWeekNumber(date));
+        const week = getWeekNumber(date);
+        const year = dayjs(date).year();
+        // TODO: remove test code
+        sendAPI(year, week);
     };
 
     const minDate = new dayjs();
@@ -128,7 +176,7 @@ export const Sections = () => {
                 <Grid item xs={7} sx={{
                     marginTop: 3.5,
                 }}>
-                    <CategoryCard title="Average Sellers" backgroundColor="#FFF7DB" />
+                    <CategoryCard title="Average Sellers" backgroundColor="#FFF7DB" data={predictData?.result['Category Type']['Slower Sellers']} />
                 </Grid>
 
                 <Grid item xs={2}>
