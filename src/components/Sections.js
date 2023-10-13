@@ -1,8 +1,13 @@
+import { Stack, TextField } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import dayjs from 'dayjs';
 import * as React from 'react';
+import Legend from './Legend';
 
 const defaultPaperStyle = {
     p: 2,
@@ -31,11 +36,53 @@ const CategoryCard = (props) => {
     );
 }
 
-export const Sections = () => {
-    return (
+const legendData = [
+    {
+        label: 'Essentials',
+        color: '#37ABFF'
+    },
+    {
+        label: 'Average Sellers',
+        color: '#FFF7DB'
+    },
+    {
+        label: 'Slow Sellers',
+        color: '#E0FFDB'
+    },
+    {
+        label: 'Hot Sellers',
+        color: '#FFDBDB'
+    }
+]
 
+export const Sections = () => {
+
+    const minDate = new dayjs();
+
+    return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container>
+                <Grid item xs={12} sx={{ marginBottom: 2 }}>
+                    <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="flex-start"
+                        sx={{ pl: 4, pr: 4 }}
+                    >
+                        <Stack direction={'column'}>
+                            <Typography variant='h6'>Pick a date to get suggestion</Typography>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                    label="Select Date"
+                                    renderInput={(params) => <TextField {...params} />}
+                                    minDate={minDate}
+                                />
+                            </LocalizationProvider>
+                        </Stack>
+
+                        <Legend data={legendData}></Legend>
+                    </Stack>
+                </Grid>
                 {/* ================ L Section Title ================ */}
                 <Grid item xs={12}>
                     <Paper sx={{
