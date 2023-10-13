@@ -57,6 +57,25 @@ const legendData = [
 
 export const Sections = () => {
 
+    const [selectedDate, setSelectedDate] = React.useState(null);
+
+    const getWeekNumber = (date) => {
+        const target = dayjs(date); // Convert the input to a Day.js object
+        target.set('hour', 0);
+        target.set('minute', 0);
+        target.set('second', 0);
+        target.set('millisecond', 0);
+        target.subtract(target.day() >= 3 ? 3 : -4, 'day');
+        const week1 = dayjs(target).set('month', 0).set('date', 4);
+        return target.diff(week1, 'week') + 1;
+    }
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        // send post req
+        console.log(getWeekNumber(date));
+    };
+
     const minDate = new dayjs();
 
     return (
@@ -70,10 +89,12 @@ export const Sections = () => {
                         sx={{ pl: 4, pr: 4 }}
                     >
                         <Stack direction={'column'}>
-                            <Typography variant='h6'>Pick a date to get suggestion</Typography>
+                            <Typography sx={{ mb: 2 }} variant='h6'>Pick a date to get suggestion</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
                                     label="Select Date"
+                                    onChange={handleDateChange}
+                                    value={selectedDate}
                                     renderInput={(params) => <TextField {...params} />}
                                     minDate={minDate}
                                 />
