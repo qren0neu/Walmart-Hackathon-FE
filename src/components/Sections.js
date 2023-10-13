@@ -21,10 +21,15 @@ const defaultPaperStyle = {
 };
 
 const CategoryCard = (props) => {
-    // console.log(props.data);
+
+    const boxStyle = {
+        fontSize: '11px',
+        color: props.headerColor ? props.headerColor : '#000000D8'
+    }
+
     return (
         <Paper
-            sx={{
+            sx={props.styles ? props.styles : {
                 ...defaultPaperStyle,
                 backgroundColor: props.backgroundColor ? props.backgroundColor : 'white'
             }}
@@ -32,19 +37,19 @@ const CategoryCard = (props) => {
                 // Handle click, maybe navigate to another page or open modal
             }}
         >
-            {!props.data && <Typography sx={{ color: '#000000D8' }} variant="h5">{props.title}</Typography>}
+            {!props.data && <Typography sx={{ color: props.headerColor ? props.headerColor : '#000000D8' }} variant="h5">{props.title}</Typography>}
             {
                 props.data &&
                 (
-                    <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+                    <Stack direction={'row'} spacing={1} justifyContent={'space-between'} alignItems={'center'}>
                         {
                             Object.keys(props.data['Dept Desc']).map((key, idx) => {
                                 const category = key;
                                 const sales = props.data['Dept Desc'][key]['SALES'].toFixed(2);
-                                return <Box key={idx} sx={{ padding: 0.5 }}>
-                                    <Stack direction={'column'} alignItems={'center'}>
-                                        <Typography sx={{ fontSize: '11px' }}>{`Category: ${category}`}</Typography>
-                                        <Typography sx={{ fontSize: '11px' }}>{`Sales: ${sales}`}</Typography>
+                                return <Box key={idx} sx={{ padding: 0.5, border: 1, borderRadius: 1, borderColor: props.headerColor ? props.headerColor : '#000000D8' }} >
+                                    <Stack direction={'column'} alignItems={'start'}>
+                                        <Typography sx={boxStyle}>{`Category: ${category}`}</Typography>
+                                        <Typography sx={boxStyle}>{`Sales: ${sales}`}</Typography>
                                     </Stack>
                                 </Box>
                             })
@@ -154,13 +159,18 @@ export const Sections = () => {
                 </Grid>
                 {/* ================ L Section Title ================ */}
                 <Grid item xs={12}>
-                    <Paper sx={{
+                    {/* <Paper sx={{
                         ...defaultPaperStyle,
                         borderBottomLeftRadius: 0,
                         backgroundColor: '#37ABFF',
                     }}>
                         <Typography sx={{ color: 'white' }} variant="h5">Essentials</Typography>
-                    </Paper>
+                    </Paper> */}
+                    <CategoryCard styles={{
+                        ...defaultPaperStyle,
+                        borderBottomLeftRadius: 0,
+                        backgroundColor: '#37ABFF',
+                    }} headerColor='white' title='Essentials' data={predictData?.result['Category Type']['Essentials']} />
                 </Grid>
 
                 <Grid item xs={2}>
@@ -176,7 +186,7 @@ export const Sections = () => {
                 <Grid item xs={7} sx={{
                     marginTop: 3.5,
                 }}>
-                    <CategoryCard title="Average Sellers" backgroundColor="#FFF7DB" data={predictData?.result['Category Type']['Slower Sellers']} />
+                    <CategoryCard title="Average Sellers" backgroundColor="#FFF7DB" data={predictData?.result['Category Type']['Avg Sellers']} />
                 </Grid>
 
                 <Grid item xs={2}>
@@ -192,7 +202,7 @@ export const Sections = () => {
                 <Grid item xs={7} sx={{
                     marginTop: 3.5,
                 }}>
-                    <CategoryCard title="Slow Sellers" backgroundColor="#E0FFDB" />
+                    <CategoryCard title="Slow Sellers" backgroundColor="#E0FFDB" data={predictData?.result['Category Type']['Slower Sellers']} />
                 </Grid>
 
                 <Grid item xs={2}>
@@ -210,7 +220,7 @@ export const Sections = () => {
                 <Grid item xs={7} sx={{
                     marginTop: 3.5,
                 }}>
-                    <CategoryCard title="Hot Sellers" backgroundColor="#FFDBDB" />
+                    <CategoryCard title="Hot Sellers" backgroundColor="#FFDBDB" data={predictData?.result['Category Type']['Hot Sellers']} />
                 </Grid>
 
             </Grid>
