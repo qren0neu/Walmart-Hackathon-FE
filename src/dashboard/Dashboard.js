@@ -10,14 +10,15 @@ import MuiDrawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import List from '@mui/material/List';
+import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import {createTheme, styled, ThemeProvider} from '@mui/material/styles';
 import * as React from 'react';
-import {mainListItems, secondaryListItems} from './listItems';
-import {Sections} from '../components/Sections';
-import {BrowserRouter, Route, Router, Routes} from "react-router-dom";
-import {Report} from "../components/Report";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HistoryReport } from '../components/HistoryReport';
+import { Report } from "../components/Report";
+import { Sections } from '../components/Sections';
+import { mainListItems, secondaryListItems } from './listItems';
 
 function Copyright(props) {
   return (
@@ -164,6 +165,8 @@ export default function Dashboard() {
             <Routes>
               <Route path="/" element={<Sections />} />
               <Route path="/reports" element={<Report />} />
+              <Route path="/history2023" element={<HistoryReport imgPath={'/report_2023.jpg'} alt={'2023 Report'} />} />
+              <Route path="/history2022" element={<HistoryReport imgPath={'/report_2022.jpg'} alt={'2022 Report'} />} />
             </Routes>
           </BrowserRouter>
           <Copyright sx={{ pt: 4 }} />

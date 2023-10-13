@@ -40,13 +40,17 @@ export const secondaryListItems = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="2023 Report" />
+      <ListItemText primary="2023 Report" onClick={() => {
+        window.location.href = '/history2023'
+      }} />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="2022 Report" />
+      <ListItemText primary="2022 Report" onClick={() => {
+        window.location.href = '/history2022'
+      }} />
     </ListItemButton>
   </React.Fragment>
 );
