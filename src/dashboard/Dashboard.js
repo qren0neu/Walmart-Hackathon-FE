@@ -16,6 +16,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HistoryReport } from '../components/HistoryReport';
 import { Report } from "../components/Report";
 import { Sections } from '../components/Sections';
+import  InnerMap from '../components/InnerMap';
 import { mainListItems, secondaryListItems } from './listItems';
 
 function Copyright(props) {
@@ -163,7 +164,7 @@ export default function Dashboard() {
           <BrowserRouter>
             {/* Use the "Routes" component to define your routes */}
             <Routes>
-              <Route path="/" element={<Sections />} />
+              <Route path="/" element={<InnerMap />} />
               <Route path="/reports" element={<Report />} />
               <Route path="/history2023" element={<HistoryReport imgPath={'/report_2023.jpg'} alt={'2023 Report'} />} />
               <Route path="/history2022" element={<HistoryReport imgPath={'/report_2022.jpg'} alt={'2022 Report'} />} />
