@@ -132,6 +132,37 @@
 		firstLevelPinsDiv.innerHTML = pinsHtml.join("");
   }
 
+  const dataList = [
+	{key: 1, dataCategory: 1, contentTitle: "grocery", contentDesc: "the sales is high"},
+	{key: 2, dataCategory: 1, contentTitle: "loblaws", contentDesc: "the sales is high"},
+	{key: 3, dataCategory: 1, contentTitle: "grocery", contentDesc: "the sales is high"},
+	{key: 4, dataCategory: 1, contentTitle: "grocery", contentDesc: "the sales is high"},
+	{key: 5, dataCategory: 1, contentTitle: "grocery", contentDesc: "the sales is high"},
+	{key: 6, dataCategory: 1, contentTitle: "grocery", contentDesc: "the sales is high"},
+	{key: 7, dataCategory: 1, contentTitle: "grocery", contentDesc: "the sales is high"},
+	{key: 8, dataCategory: 1, contentTitle: "grocery", contentDesc: "the sales is high"},
+	{key: 9, dataCategory: 1, contentTitle: "grocery", contentDesc: "the sales is high"},
+]
+
+
+const buildContentItem = ({key, dataCategory, contentTitle, contentDesc}) => `
+	<li class="content__item" data-space="${dataCategory}.0${key}" data-category="${dataCategory}">
+		<h3 class="content__item-title">${contentTitle}</h3>
+			<div class="content__item-details">
+				<p class="content__meta">
+					<span class="content__meta-item"><strong>Opening Hours:</strong> 6:30AM &mdash; 11:30PM</span> 
+					<span class="content__meta-item"><strong>Phone:</strong> (0) 66 5738902</span>
+				</p>
+				<p class="content__desc">${contentDesc}</p>
+			</li>
+`
+
+function renderContentDiv() {
+	const contentList = dataList;
+	const contentListHtml = contentList.map(buildContentItem);
+	contentEl.innerHTML = contentListHtml.join('');
+};
+
 	/**
 	 * Initialize/Bind events fn.
 	 */
@@ -155,6 +186,8 @@
 		levelDownCtrl.addEventListener('click', function() { navigate('Up'); });
 
 		renderLevelPins();
+
+		renderContentDiv();
 
 		// sort by name ctrl - add/remove category name (css pseudo element) from list and sorts the spaces by name 
 		sortByNameCtrl.addEventListener('click', function() {
