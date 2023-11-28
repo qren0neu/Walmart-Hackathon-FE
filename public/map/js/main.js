@@ -103,6 +103,35 @@
 		initEvents();
 	}
 
+	const firstMallDiv = document.getElementsByClassName("level level--1")[0];
+	const firstLevelPinsDiv = firstMallDiv.querySelectorAll(":scope > .level__pins")[0];
+
+	const pinList = [
+		{key: 1, dataCategory: 1, categoryIcon: "tomato"},
+		{key: 2, dataCategory: 1, categoryIcon: "tomato"},
+		{key: 3, dataCategory: 1, categoryIcon: "tomato"},
+		{key: 4, dataCategory: 1, categoryIcon: "tomato"},
+		{key: 5, dataCategory: 1, categoryIcon: "tomato"},
+		{key: 6, dataCategory: 1, categoryIcon: "tomato"},
+		{key: 7, dataCategory: 1, categoryIcon: "tomato"},
+		{key: 8, dataCategory: 1, categoryIcon: "tomato"},
+		{key: 9, dataCategory: 1, categoryIcon: "tomato"},
+	];
+
+	const buildPins = ({ key, dataCategory, categoryIcon }) => `
+		<a class="pin pin--${dataCategory}-${key}" data-category=${dataCategory} data-space="${dataCategory}.0${key}" href="#" aria-label="Pin for ${categoryIcon}">
+			<span class="pin__icon">
+				<svg class="icon icon--pin"><use xlink:href="#icon-pin"></use></svg>
+				<svg class="icon icon--logo icon--${categoryIcon}"><use xlink:href="#icon-${categoryIcon}"></use></svg>
+			</span>
+		</a>
+	`;
+
+	function renderLevelPins() {
+		const pinsHtml = pinList.map(buildPins);
+		firstLevelPinsDiv.innerHTML = pinsHtml.join("");
+  }
+
 	/**
 	 * Initialize/Bind events fn.
 	 */
@@ -125,6 +154,8 @@
 		levelUpCtrl.addEventListener('click', function() { navigate('Down'); });
 		levelDownCtrl.addEventListener('click', function() { navigate('Up'); });
 
+		renderLevelPins();
+
 		// sort by name ctrl - add/remove category name (css pseudo element) from list and sorts the spaces by name 
 		sortByNameCtrl.addEventListener('click', function() {
 			if( this.checked ) {
@@ -138,27 +169,30 @@
 		});
 
 		// hovering a pin / clicking a pin
-		pins.forEach(function(pin) {
-			var contentItem = contentEl.querySelector('.content__item[data-space="' + pin.getAttribute('data-space') + '"]');
-
-			pin.addEventListener('mouseenter', function() {
-				if( !isOpenContentArea ) {
-					classie.add(contentItem, 'content__item--hover');
-				}
-			});
-			pin.addEventListener('mouseleave', function() {
-				if( !isOpenContentArea ) {
+		setTimeout(() => {
+			var pins = [].slice.call(mallLevelsEl.querySelectorAll('.pin'));
+			pins.forEach(function(pin) {
+				var contentItem = contentEl.querySelector('.content__item[data-space="' + pin.getAttribute('data-space') + '"]');
+	
+				pin.addEventListener('mouseenter', function() {
+					if( !isOpenContentArea ) {
+						classie.add(contentItem, 'content__item--hover');
+					}
+				});
+				pin.addEventListener('mouseleave', function() {
+					if( !isOpenContentArea ) {
+						classie.remove(contentItem, 'content__item--hover');
+					}
+				});
+				pin.addEventListener('click', function(ev) {
+					ev.preventDefault();
+					// open content for this pin
+					openContent(pin.getAttribute('data-space'));
+					// remove hover class (showing the title)
 					classie.remove(contentItem, 'content__item--hover');
-				}
+				});
 			});
-			pin.addEventListener('click', function(ev) {
-				ev.preventDefault();
-				// open content for this pin
-				openContent(pin.getAttribute('data-space'));
-				// remove hover class (showing the title)
-				classie.remove(contentItem, 'content__item--hover');
-			});
-		});
+		}, 0);
 
 		// closing the content area
 		contentCloseCtrl.addEventListener('click', function() {
