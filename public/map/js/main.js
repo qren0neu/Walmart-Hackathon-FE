@@ -274,32 +274,6 @@ async function getResponse() {
 			}
 		});
 
-		// hovering a pin / clicking a pin
-		// setTimeout(() => {
-		// 	var pins = [].slice.call(mallLevelsEl.querySelectorAll('.pin'));
-		// 	pins.forEach(function(pin) {
-		// 		var contentItem = contentEl.querySelector('.content__item[data-space="' + pin.getAttribute('data-space') + '"]');
-	
-		// 		pin.addEventListener('mouseenter', function() {
-		// 			if( !isOpenContentArea ) {
-		// 				classie.add(contentItem, 'content__item--hover');
-		// 			}
-		// 		});
-		// 		pin.addEventListener('mouseleave', function() {
-		// 			if( !isOpenContentArea ) {
-		// 				classie.remove(contentItem, 'content__item--hover');
-		// 			}
-		// 		});
-		// 		pin.addEventListener('click', function(ev) {
-		// 			ev.preventDefault();
-		// 			// open content for this pin
-		// 			openContent(pin.getAttribute('data-space'));
-		// 			// remove hover class (showing the title)
-		// 			classie.remove(contentItem, 'content__item--hover');
-		// 		});
-		// 	});
-		// }, 0);
-
 		// closing the content area
 		contentCloseCtrl.addEventListener('click', function() {
 			closeContentArea();
