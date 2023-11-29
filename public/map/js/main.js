@@ -80,9 +80,9 @@
 		// spaces list element
 		spacesListEl = document.getElementById('spaces-list'),
 		// spaces list ul
-		spacesEl = spacesListEl.querySelector('ul.list'),
+		// spacesEl = spacesListEl.querySelector('ul.list'),
 		// all the spaces listed
-		spaces = [].slice.call(spacesEl.querySelectorAll('.list__item > a.list__link')),
+		// spaces = [].slice.call(spacesEl.querySelectorAll('.list__item > a.list__link')),
 		// reference to the current shows space (name set in the data-name attr of both the listed spaces and the pins on the map)
 		spaceref,
 		// sort by ctrls
@@ -94,9 +94,9 @@
 		// open search ctrl
 		openSearchCtrl = document.querySelector('button.open-search'),
 		// main container
-		containerEl = document.querySelector('.container'),
+		containerEl = document.querySelector('.container');
 		// close search ctrl
-		closeSearchCtrl = spacesListEl.querySelector('button.close-search');
+		// closeSearchCtrl = spacesListEl.querySelector('button.close-search');
 
 	function init() {
 		// init/bind events
@@ -323,16 +323,16 @@ function updatePageContent(weekNumber) {
 		// updatePageContent();
 
 		// sort by name ctrl - add/remove category name (css pseudo element) from list and sorts the spaces by name 
-		sortByNameCtrl.addEventListener('click', function() {
-			if( this.checked ) {
-				classie.remove(spacesEl, 'grouped-by-category');
-				spacesList.sort('list__link');
-			}
-			else {
-				classie.add(spacesEl, 'grouped-by-category'); 
-				spacesList.sort('category');
-			}
-		});
+		// sortByNameCtrl.addEventListener('click', function() {
+		// 	if( this.checked ) {
+		// 		classie.remove(spacesEl, 'grouped-by-category');
+		// 		spacesList.sort('list__link');
+		// 	}
+		// 	else {
+		// 		classie.add(spacesEl, 'grouped-by-category'); 
+		// 		spacesList.sort('category');
+		// 	}
+		// });
 
 		// closing the content area
 		contentCloseCtrl.addEventListener('click', function() {
@@ -340,21 +340,21 @@ function updatePageContent(weekNumber) {
 		});
 
 		// clicking on a listed space: open level - shows space
-		spaces.forEach(function(space) {
-			var spaceItem = space.parentNode,
-				level = spaceItem.getAttribute('data-level'),
-				spacerefval = spaceItem.getAttribute('data-space');
+		// spaces.forEach(function(space) {
+		// 	var spaceItem = space.parentNode,
+		// 		level = spaceItem.getAttribute('data-level'),
+		// 		spacerefval = spaceItem.getAttribute('data-space');
 
-			space.addEventListener('click', function(ev) {
-				ev.preventDefault();
-				// for smaller screens: close search bar
-				closeSearch();
-				// open level
-				showLevel(level);
-				// open content for this space
-				openContent(spacerefval);
-			});
-		});
+		// 	space.addEventListener('click', function(ev) {
+		// 		ev.preventDefault();
+		// 		// for smaller screens: close search bar
+		// 		closeSearch();
+		// 		// open level
+		// 		showLevel(level);
+		// 		// open content for this space
+		// 		openContent(spacerefval);
+		// 	});
+		// });
 
 		// smaller screens: open the search bar
 		openSearchCtrl.addEventListener('click', function() {
@@ -362,9 +362,9 @@ function updatePageContent(weekNumber) {
 		});
 
 		// smaller screens: close the search bar
-		closeSearchCtrl.addEventListener('click', function() {
-			closeSearch();
-		});
+		// closeSearchCtrl.addEventListener('click', function() {
+		// 	closeSearch();
+		// });
 	}
 
 	/**
