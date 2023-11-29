@@ -4062,7 +4062,6 @@ var data = [
 ];
 
 const generateChartOptions = (data) => {
-  const categories = [...new Set(data.map((item) => item["Category Type"]))];
 
   const seriesData = data.reduce((acc, item) => {
     const week = item["WM_WEEK"];

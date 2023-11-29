@@ -15,7 +15,6 @@ import * as React from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HistoryReport } from '../components/HistoryReport';
 import { Report } from "../components/Report";
-import { Sections } from '../components/Sections';
 import  InnerMap from '../components/InnerMap';
 import { mainListItems, secondaryListItems } from './listItems';
 
