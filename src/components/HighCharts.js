@@ -4062,6 +4062,7 @@ var data = [
 ];
 
 const generateChartOptions = (data) => {
+  const categories = [...new Set(data.map((item) => item["Category Type"]))];
 
   const seriesData = data.reduce((acc, item) => {
     const week = item["WM_WEEK"];
@@ -4077,19 +4078,27 @@ const generateChartOptions = (data) => {
       acc[category][dept] = [];
     }
 
-    acc[category][dept].push([week, sales]);
+    acc[category][dept].push([week, Math.floor(parseFloat(sales))]);
 
     return acc;
   }, {});
 
+  const categoryColors = {};
+  let colorIndex = 0;
+
+  for (const category of Object.keys(seriesData)) {
+    categoryColors[category] =
+      Highcharts.getOptions().colors[
+        colorIndex % Highcharts.getOptions().colors.length
+      ];
+    colorIndex++;
+  }
+
   const series = Object.entries(seriesData).flatMap(([category, depts]) =>
     Object.entries(depts).map(([dept, data], index) => ({
-      name: dept,
+      name: dept + " [" + category + "]",
       data: data,
-      color:
-        Highcharts.getOptions().colors[
-          index % Highcharts.getOptions().colors.length
-        ],
+      color: categoryColors[category],
     }))
   );
 
