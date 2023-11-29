@@ -176,7 +176,8 @@
 
         var weekInfo = getWeekNumber(date);
         var newWeekNumber = weekInfo[1];
-		updatePageContent(newWeekNumber);
+        updatePageContent(newWeekNumber);
+
         // weekNumber = newWeekNumber;
         // console.log("Year: " + weekInfo[0] + ", Week number: " + weekInfo[1]);
 
@@ -194,6 +195,7 @@
         var $calendar = $(this);
         var $parent = $calendar.parents(".date-picker");
         $parent.find(".result").children("span").html(selectedDate);
+        $parent.toggleClass("open");
       },
     });
 
@@ -247,52 +249,52 @@
     });
 
     // const buildPins = ({ key, category, categoryIcon }) => `
-	// 	<a class="pin pin--${category}-${key}" key=${key} data-category=${category} data-space="0" href="#" aria-label="Pin for ${categoryIcon}">
-	// 		<span class="pin__icon">
-	// 			<svg class="icon icon--pin"><use xlink:href="#icon-pin"></use></svg>
-	// 			<svg class="icon icon--logo icon--${categoryIcon}"><use xlink:href="#icon-${categoryIcon}"></use></svg>
-	// 		</span>
-	// 	</a>
-	// `;
+    // 	<a class="pin pin--${category}-${key}" key=${key} data-category=${category} data-space="0" href="#" aria-label="Pin for ${categoryIcon}">
+    // 		<span class="pin__icon">
+    // 			<svg class="icon icon--pin"><use xlink:href="#icon-pin"></use></svg>
+    // 			<svg class="icon icon--logo icon--${categoryIcon}"><use xlink:href="#icon-${categoryIcon}"></use></svg>
+    // 		</span>
+    // 	</a>
+    // `;
 
     // function renderLevelPins() {
     //   const pinsHtml = dataArray.map(buildPins);
     //   firstLevelPinsDiv.innerHTML = pinsHtml.join("");
     // }
 
-//     const buildContentItem = ({
-//       key,
-//       category,
-//       department,
-//       SALES,
-//       original_storage,
-//       ratio_change,
-//       sales_2023,
-//       predicted_storage,
-//     }) => `
-// 	  <li class="content__item" data-space="${category}.0${key}" data-category="${category}">
-// 		  <h3 class="content__item-title"><b>${department}</b></h3>
-// 			  <div class="content__item-details">
-// 			  <table class="department-table">
-// 				<tbody>
-// 					<tr>
-// 						<th>Sales of Past Year:</th>
-// 						<td>$ ${sales_2023}</td>
-// 						<th>Sales Prediction:</th>
-// 						<td>$ ${SALES}</td>
-// 						<th>Ratio Change:</th>
-// 						<td id="ratioChangeValue">${ratio_change}<span id="ratioChangeArrow"></span></td>
-// 					</tr>
-// 					<tr>
-// 						<th>Original Storage:</th>
-// 						<td>${original_storage} units</td>
-// 						<th>Predicted Storage:</th>
-// 						<td>${predicted_storage} units</td>
-// 					</tr>
-// 				</tbody>
-// 			</table>
-// 		</li>
-//   `;
+    //     const buildContentItem = ({
+    //       key,
+    //       category,
+    //       department,
+    //       SALES,
+    //       original_storage,
+    //       ratio_change,
+    //       sales_2023,
+    //       predicted_storage,
+    //     }) => `
+    // 	  <li class="content__item" data-space="${category}.0${key}" data-category="${category}">
+    // 		  <h3 class="content__item-title"><b>${department}</b></h3>
+    // 			  <div class="content__item-details">
+    // 			  <table class="department-table">
+    // 				<tbody>
+    // 					<tr>
+    // 						<th>Sales of Past Year:</th>
+    // 						<td>$ ${sales_2023}</td>
+    // 						<th>Sales Prediction:</th>
+    // 						<td>$ ${SALES}</td>
+    // 						<th>Ratio Change:</th>
+    // 						<td id="ratioChangeValue">${ratio_change}<span id="ratioChangeArrow"></span></td>
+    // 					</tr>
+    // 					<tr>
+    // 						<th>Original Storage:</th>
+    // 						<td>${original_storage} units</td>
+    // 						<th>Predicted Storage:</th>
+    // 						<td>${predicted_storage} units</td>
+    // 					</tr>
+    // 				</tbody>
+    // 			</table>
+    // 		</li>
+    //   `;
 
     // function renderContentDiv() {
     //   const contentListHtml = dataArray.map(buildContentItem);
@@ -303,8 +305,8 @@
     // renderLevelPins();
 
     // renderContentDiv();
-    
-	var pins = [].slice.call(mallLevelsEl.querySelectorAll(".pin"));
+
+    var pins = [].slice.call(mallLevelsEl.querySelectorAll(".pin"));
     pins.forEach(function (pin) {
       var contentItem = contentEl.querySelector(
         '.content__item[data-space="' + pin.getAttribute("data-space") + '"]'
@@ -327,17 +329,19 @@
       });
 
       pin.addEventListener("click", function (ev) {
-		console.log(1);
+        console.log(1);
         ev.preventDefault();
         // open content for this pin
-		console.log(2);
+        console.log(2);
         openContent(pin.getAttribute("data-space"));
         // remove hover class (showing the title)
-		console.log(3);
-         classie.remove(contentItem, "content__item--hover");
+        console.log(3);
+        classie.remove(contentItem, "content__item--hover");
         // 假设 dataOfDept 是你的数据对象
-		console.log(4);
-		document.getElementById("departmentName").textContent = `${dataOfDept.department}`;
+        console.log(4);
+        document.getElementById(
+          "departmentName"
+        ).textContent = `${dataOfDept.department}`;
         document.getElementById(
           "sales2023Value"
         ).textContent = `$ ${dataOfDept.sales_2023}`;

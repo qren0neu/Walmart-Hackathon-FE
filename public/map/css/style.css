@@ -364,19 +364,19 @@ button:focus {
 }
 
 .level--1::after {
-	content: 'L1';
+	content: 'Eglinton';
 }
 
 .level--2::after {
-	content: 'L2';
+	content: 'Lawrence';
 }
 
 .level--3::after {
-	content: 'L3';
+	content: 'Gerrard';
 }
 
 .level--4::after {
-	content: 'L4';
+	content: 'Dufferin';
 }
 
 .level:not(:first-child) {
