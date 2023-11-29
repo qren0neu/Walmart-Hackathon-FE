@@ -120,24 +120,6 @@
 		'4': 'modx'
 	};
 
-const buildContentItem = ({key, dataCategory, contentTitle, contentDesc}) => `
-	<li class="content__item" data-space="${dataCategory}.0${key}" data-category="${dataCategory}">
-		<h3 class="content__item-title">${contentTitle}</h3>
-			<div class="content__item-details">
-				<p class="content__meta">
-					<span class="content__meta-item"><strong>Opening Hours:</strong> 6:30AM &mdash; 11:30PM</span> 
-					<span class="content__meta-item"><strong>Phone:</strong> (0) 66 5738902</span>
-				</p>
-				<p class="content__desc">${contentDesc}</p>
-			</li>
-`
-
-function renderContentDiv() {
-	const contentList = dataList;
-	const contentListHtml = contentList.map(buildContentItem);
-	contentEl.innerHTML = contentListHtml.join('');
-};
-
 async function getResponse() {
 	const response = await fetch(
 		'https://smos-api.vercel.app/',
@@ -197,6 +179,38 @@ async function getResponse() {
 		firstLevelPinsDiv.innerHTML = pinsHtml.join("");
   	}
 
+	  const buildContentItem = ({key, category, department, SALES, original_storage, ratio_change, sales_2023, predicted_storage}) => `
+	  <li class="content__item" data-space="${category}.0${key}" data-category="${category}">
+		  <h3 class="content__item-title">${department}</h3>
+			  <div class="content__item-details">
+			  <table class="department-table">
+				<tbody>
+					<tr>
+						<th>Sales of Past Year:</th>
+						<td>${sales_2023}</td>
+						<th>Sales Prediction:</th>
+						<td>${SALES}</td>
+						<th>Ratio Change:</th>
+						<td id="ratioChangeValue">${ratio_change}<span id="ratioChangeArrow"></span></td>
+					</tr>
+					<tr>
+						<th>Original Storage:</th>
+						<td>${original_storage} units</td>
+						<th>Predicted Storage:</th>
+						<td>${predicted_storage} units</td>
+					</tr>
+				</tbody>
+			</table>
+			  </li>
+  `
+  
+	function renderContentDiv() {
+		const contentListHtml = dataArray.map(buildContentItem);
+		contentEl.innerHTML = contentListHtml.join('');
+	};
+
+    renderContentDiv();
+
 	renderLevelPins();
 
 	var pins = [].slice.call(mallLevelsEl.querySelectorAll('.pin'));
@@ -221,8 +235,8 @@ async function getResponse() {
 					classie.remove(contentItem, 'content__item--hover');
 				});
 			});
-}
 
+}
 
 	/**
 	 * Initialize/Bind events fn.
@@ -247,8 +261,6 @@ async function getResponse() {
 		levelDownCtrl.addEventListener('click', function() { navigate('Up'); });
 
 		getResponse();
-
-		renderContentDiv();
 
 		// sort by name ctrl - add/remove category name (css pseudo element) from list and sorts the spaces by name 
 		sortByNameCtrl.addEventListener('click', function() {

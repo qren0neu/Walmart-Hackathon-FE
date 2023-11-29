@@ -37,6 +37,11 @@ a {
 	outline: none;
 }
 
+li {
+	list-style-type: none !important;
+	padding: 0;
+}
+
 a:hover,
 button:hover {
 	color: #515158;
@@ -796,6 +801,33 @@ button:focus {
 .pin--active .icon--pin {
 	stroke: #515158;
 	stroke-width: 15px;
+}
+
+.department-detail {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.department-name {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.department-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.department-table th, .department-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.department-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
 }
 
 .icon--pin {
