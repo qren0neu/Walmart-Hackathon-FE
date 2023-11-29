@@ -78,7 +78,7 @@
 		// check if all levels are shown or if one level is shown (expanded)
 		isExpanded,
 		// spaces list element
-		spacesListEl = document.getElementById('spaces-list'),
+		// spacesListEl = document.getElementById('spaces-list'),
 		// spaces list ul
 		// spacesEl = spacesListEl.querySelector('ul.list'),
 		// all the spaces listed
@@ -86,9 +86,9 @@
 		// reference to the current shows space (name set in the data-name attr of both the listed spaces and the pins on the map)
 		spaceref,
 		// sort by ctrls
-		sortByNameCtrl = document.querySelector('#sort-by-name'),
+		// sortByNameCtrl = document.querySelector('#sort-by-name'),
 		// listjs initiliazation (all mall´s spaces)
-		spacesList = new List('spaces-list', { valueNames: ['list__link', { data: ['level'] }, { data: ['category'] } ]} ),
+		// spacesList = new List('spaces-list', { valueNames: ['list__link', { data: ['level'] }, { data: ['category'] } ]} ),
 
 		// smaller screens:
 		// open search ctrl
@@ -357,9 +357,9 @@ function updatePageContent(weekNumber) {
 		// });
 
 		// smaller screens: open the search bar
-		openSearchCtrl.addEventListener('click', function() {
-			openSearch();
-		});
+		// openSearchCtrl.addEventListener('click', function() {
+		// 	openSearch();
+		// });
 
 		// smaller screens: close the search bar
 		// closeSearchCtrl.addEventListener('click', function() {
@@ -403,7 +403,7 @@ function updatePageContent(weekNumber) {
 		showMallNav();
 
 		// filter the spaces for this level
-		showLevelSpaces();
+		// showLevelSpaces();
 	}
 
 	/**
@@ -440,11 +440,11 @@ function updatePageContent(weekNumber) {
 	/**
 	 * Shows all spaces for current level
 	 */
-	function showLevelSpaces() {
-		spacesList.filter(function(item) { 
-			return item.values().level === selectedLevel.toString(); 
-		});
-	}
+	// function showLevelSpaces() {
+	// 	spacesList.filter(function(item) { 
+	// 		return item.values().level === selectedLevel.toString(); 
+	// 	});
+	// };
 
 	/**
 	 * Shows the level´s pins
@@ -585,12 +585,12 @@ function updatePageContent(weekNumber) {
 		}
 		
 		// remove class active (if any) from current list item
-		var activeItem = spacesEl.querySelector('li.list__item--active');
-		if( activeItem ) {
-			classie.remove(activeItem, 'list__item--active');
-		}
+		// var activeItem = spacesEl.querySelector('li.list__item--active');
+		// if( activeItem ) {
+		// 	classie.remove(activeItem, 'list__item--active');
+		// }
 		// list item gets class active
-		classie.add(spacesEl.querySelector('li[data-space="' + spacerefval + '"]'), 'list__item--active');
+		// classie.add(spacesEl.querySelector('li[data-space="' + spacerefval + '"]'), 'list__item--active');
 
 		// remove class selected (if any) from current space
 		var activeSpaceArea = mallLevels[selectedLevel - 1].querySelector('svg > .map__space--selected');
@@ -663,10 +663,10 @@ function updatePageContent(weekNumber) {
 		// map pin gets unselected
 		classie.remove(mallLevelsEl.querySelector('.pin[data-space="' + spaceref + '"]'), 'pin--active');
 		// remove class active (if any) from current list item
-		var activeItem = spacesEl.querySelector('li.list__item--active');
-		if( activeItem ) {
-			classie.remove(activeItem, 'list__item--active');
-		}
+		// var activeItem = spacesEl.querySelector('li.list__item--active');
+		// if( activeItem ) {
+		// 	classie.remove(activeItem, 'list__item--active');
+		// }
 		// remove class selected (if any) from current space
 		var activeSpaceArea = mallLevels[selectedLevel - 1].querySelector('svg > .map__space--selected');
 		if( activeSpaceArea ) {
