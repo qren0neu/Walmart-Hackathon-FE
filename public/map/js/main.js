@@ -187,7 +187,7 @@ async function getResponse() {
 
 	  const buildContentItem = ({key, category, department, SALES, original_storage, ratio_change, sales_2023, predicted_storage}) => `
 	  <li class="content__item" data-space="${category}.0${key}" data-category="${category}">
-		  <h3 class="content__item-title">${department}</h3>
+		  <h3 class="content__item-title"><b>${department}</b></h3>
 			  <div class="content__item-details">
 			  <table class="department-table">
 				<tbody>
