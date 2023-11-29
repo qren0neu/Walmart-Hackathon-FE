@@ -979,6 +979,13 @@ button:focus {
 .department-table th {
     background-color: #f2f2f2;
     font-weight: bold;
+	cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.department-table th:hover {
+    background-color: #e0e0e0; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
 }
 
 .icon--pin {
