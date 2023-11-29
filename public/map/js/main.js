@@ -106,6 +106,8 @@
 	const firstMallDiv = document.getElementsByClassName("level level--1")[0];
 	const firstLevelPinsDiv = firstMallDiv.querySelectorAll(":scope > .level__pins")[0];
 
+	let data;
+
 	const categoryMapping = {
 		'Essentials': '1',
 		'Other products': '2',
@@ -120,21 +122,53 @@
 		'4': 'modx'
 	};
 
-async function getResponse() {
-	const response = await fetch(
-		'https://smos-api.vercel.app/',
-		{
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-			}
-		}
-	);
-	if (!response.ok) {
-		throw new Error(`HTTP error! status: ${response.status}`);
+	function getWeekNumber(d) {
+		d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+		d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+		var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+		var weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+		return [d.getUTCFullYear(), weekNo];
 	}
-	const data = await response.json();
-	const dataObj = Object.values(data['result'])[0]['Type'];
+	
+	let currentWeekNumber; 
+
+$(function () {
+	$(".calendar").datepicker({
+		dateFormat: "dd/mm/yy",
+		firstDay: 1,
+		onSelect: function(selectedDate) {
+
+			var parts = selectedDate.split('/');
+        	var date = new Date(parts[2], parts[1] - 1, parts[0]);
+
+        	var weekInfo = getWeekNumber(date);
+			var newWeekNumber = weekInfo[1];
+        	console.log("Year: " + weekInfo[0] + ", Week number: " + weekInfo[1]);
+
+			if (currentWeekNumber !== undefined && currentWeekNumber !== newWeekNumber) {
+				// If week number changed, update the relevant parts of the page
+				updatePageContent(newWeekNumber);
+			}
+			currentWeekNumber = newWeekNumber;
+
+			$(this).trigger('blur');
+
+            var $calendar = $(this);
+            var $parent = $calendar.parents(".date-picker");
+            $parent.find(".result").children("span").html(selectedDate);
+			// $('.calendar').datepicker('hide')
+        }
+	});
+
+	$(document).on("click", ".date-picker .input", function (e) {
+        var $me = $(this),
+            $parent = $me.parents(".date-picker");
+        $parent.toggleClass("open");
+    });
+});
+
+function updatePageContent(weekNumber) {
+	const dataObj = Object.values(data['result'])[weekNumber]['Type'];
 	
 	const dataArray = [];
 	let uniqueKey = 1;
@@ -215,9 +249,9 @@ async function getResponse() {
 		contentEl.innerHTML = contentListHtml.join('');
 	};
 
-    renderContentDiv();
-
 	renderLevelPins();
+
+    renderContentDiv();
 
 	var pins = [].slice.call(mallLevelsEl.querySelectorAll('.pin'));
 			pins.forEach(function(pin) {
@@ -244,26 +278,22 @@ async function getResponse() {
 
 }
 
-$(function () {
-	$(".calendar").datepicker({
-		dateFormat: "dd/mm/yy",
-		firstDay: 1
-	});
-
-	$(document).on("click", ".date-picker .input", function (e) {
-		var $me = $(this),
-			$parent = $me.parents(".date-picker");
-		$parent.toggleClass("open");
-	});
-
-	$(".calendar").on("change", function () {
-		var $me = $(this),
-			$selected = $me.val(),
-			$parent = $me.parents(".date-picker");
-		$parent.find(".result").children("span").html($selected);
-	});
-});
-
+async function getResponse() {
+	const response = await fetch(
+		'https://smos-api.vercel.app/',
+		{
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			}
+		}
+	);
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
+	const responseData = await response.json();
+	data = responseData;
+}
 	/**
 	 * Initialize/Bind events fn.
 	 */
