@@ -817,12 +817,14 @@ button:focus {
 .department-table {
     width: 100%;
     border-collapse: collapse;
+	table-layout: fixed;
 }
 
 .department-table th, .department-table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+	width: auto; /* Set a fixed width for each cell */
 }
 
 .department-table th {
