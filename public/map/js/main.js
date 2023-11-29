@@ -329,16 +329,16 @@
       });
 
       pin.addEventListener("click", function (ev) {
-        console.log(1);
+
         ev.preventDefault();
         // open content for this pin
-        console.log(2);
+
         openContent(pin.getAttribute("data-space"));
         // remove hover class (showing the title)
-        console.log(3);
+
         classie.remove(contentItem, "content__item--hover");
         // 假设 dataOfDept 是你的数据对象
-        console.log(4);
+
         document.getElementById(
           "departmentName"
         ).textContent = `${dataOfDept.department}`;
