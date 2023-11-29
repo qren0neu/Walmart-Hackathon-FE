@@ -165,6 +165,12 @@ async function getResponse() {
 		}
 	}	
 
+	dataArray.forEach(item => {
+		item.SALES = Math.floor(parseFloat(item.SALES)).toLocaleString();
+    	item.sales_2023 = Math.floor(parseFloat(item.sales_2023)).toLocaleString();
+		item.predicted_storage = Math.floor(parseFloat(item.predicted_storage)).toString();
+	});
+
 	const buildPins = ({ key, category, categoryIcon }) => `
 		<a class="pin pin--${category}-${key}" data-category=${category} data-space="${category}.0${key}" href="#" aria-label="Pin for ${categoryIcon}">
 			<span class="pin__icon">
@@ -187,9 +193,9 @@ async function getResponse() {
 				<tbody>
 					<tr>
 						<th>Sales of Past Year:</th>
-						<td>${sales_2023}</td>
+						<td>$ ${sales_2023}</td>
 						<th>Sales Prediction:</th>
-						<td>${SALES}</td>
+						<td>$ ${SALES}</td>
 						<th>Ratio Change:</th>
 						<td id="ratioChangeValue">${ratio_change}<span id="ratioChangeArrow"></span></td>
 					</tr>
