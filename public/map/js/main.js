@@ -107,6 +107,7 @@
 	const firstLevelPinsDiv = firstMallDiv.querySelectorAll(":scope > .level__pins")[0];
 
 	let data;
+	let weekNumber = 0;
 
 	const categoryMapping = {
 		'Essentials': '1',
@@ -132,6 +133,24 @@
 	
 	let currentWeekNumber; 
 
+	async function getResponse() {
+		const response = await fetch(
+			'https://smos-api.vercel.app/',
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			}
+		);
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+		const responseData = await response.json();
+		data = responseData;
+		updatePageContent(weekNumber);
+	}
+
 $(function () {
 	$(".calendar").datepicker({
 		dateFormat: "dd/mm/yy",
@@ -143,6 +162,7 @@ $(function () {
 
         	var weekInfo = getWeekNumber(date);
 			var newWeekNumber = weekInfo[1];
+			weekNumber = newWeekNumber;
         	console.log("Year: " + weekInfo[0] + ", Week number: " + weekInfo[1]);
 
 			if (currentWeekNumber !== undefined && currentWeekNumber !== newWeekNumber) {
@@ -156,7 +176,6 @@ $(function () {
             var $calendar = $(this);
             var $parent = $calendar.parents(".date-picker");
             $parent.find(".result").children("span").html(selectedDate);
-			// $('.calendar').datepicker('hide')
         }
 	});
 
@@ -278,22 +297,6 @@ function updatePageContent(weekNumber) {
 
 }
 
-async function getResponse() {
-	const response = await fetch(
-		'https://smos-api.vercel.app/',
-		{
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-			}
-		}
-	);
-	if (!response.ok) {
-		throw new Error(`HTTP error! status: ${response.status}`);
-	}
-	const responseData = await response.json();
-	data = responseData;
-}
 	/**
 	 * Initialize/Bind events fn.
 	 */
@@ -317,6 +320,7 @@ async function getResponse() {
 		levelDownCtrl.addEventListener('click', function() { navigate('Up'); });
 
 		getResponse();
+		// updatePageContent();
 
 		// sort by name ctrl - add/remove category name (css pseudo element) from list and sorts the spaces by name 
 		sortByNameCtrl.addEventListener('click', function() {
