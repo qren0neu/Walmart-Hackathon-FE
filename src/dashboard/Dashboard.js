@@ -164,8 +164,8 @@ export default function Dashboard() {
           <BrowserRouter>
             {/* Use the "Routes" component to define your routes */}
             <Routes>
-              <Route path="/" element={<InnerMap />} />
-              <Route path="/reports" element={<Report />} />
+              <Route path="/" element={<Report />} />
+              <Route path="/dashboard" element={<InnerMap />} />
               <Route path="/history2023" element={<HistoryReport imgPath={'/report_2023.jpg'} alt={'2023 Report'} />} />
               <Route path="/history2022" element={<HistoryReport imgPath={'/report_2022.jpg'} alt={'2022 Report'} />} />
             </Routes>

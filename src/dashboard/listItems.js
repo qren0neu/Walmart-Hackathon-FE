@@ -4,28 +4,25 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PeopleIcon from '@mui/icons-material/People';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
 export const mainListItems = (
   <React.Fragment>
     <ListItemButton>
       <ListItemIcon>
-        <DashboardIcon />
+        <QueryStatsIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" onClick={() => {
+      <ListItemText primary="Linechart" onClick={() => {
         window.location.href = '/'
       }} />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <BarChartIcon />
+        <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Reports" onClick={() => {
-        window.location.href = '/reports'
+      <ListItemText primary="Dashboard" onClick={() => {
+        window.location.href = '/dashboard'
       }} />
     </ListItemButton>
   </React.Fragment>
